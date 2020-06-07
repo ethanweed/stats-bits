@@ -12,7 +12,7 @@
 <meta name="author" content="Ethan Weed" />
 
 
-<title>Shapiro-Wilk Test Simulation</title>
+<title>Shapiro-Wilk Test: False Negatives Simulation</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -446,14 +446,14 @@ summary {
 
 
 
-<h1 class="title toc-ignore">Shapiro-Wilk Test Simulation</h1>
+<h1 class="title toc-ignore">Shapiro-Wilk Test: False Negatives Simulation</h1>
 <h4 class="author">Ethan Weed</h4>
 <h4 class="date">3/24/2020</h4>
 
 </div>
 
 
-<p>The <a href="https://en.wikipedia.org/wiki/Shapiro–Wilk_test">Shapiro_Wilk test</a> is used to evaluate whether a sample is likely to come from a normal distribution. The null hypothesis is that the sample is drawn from a normal distribution, thus a p &lt; alpha indicates that the sample was drawn from a non-normal distribution. This simulation estimates distributions of percentages of p-values &gt; 0.05 for the Shapiro-Wilk test when samples are drawn from a uniform distribution. This represents the frequency with which we could expect that the Shapiro-Wilk test would lead to the conclusion that the data are normally distributed, when in fact they are uniformally distributed. Data shown for sample sizes of 10, 30, 50, and 75 participants. Percentage estimates are bootstrapped over 1000 iterations. The final plot shows an example of what the data being tested looks like. Labels in plots show mean estimated percentage of false negatives.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Shapiro–Wilk_test">Shapiro-Wilk test</a> is used to evaluate whether a sample is likely to come from a normal distribution. The null hypothesis is that the sample is drawn from a normal distribution, thus a p &lt; alpha indicates that the sample was drawn from a non-normal distribution. This simulation estimates distributions of percentages of p-values &gt; 0.05 for the Shapiro-Wilk test when samples are drawn from a uniform distribution. This represents the frequency with which we could expect that the Shapiro-Wilk test would lead to the conclusion that the data are normally distributed, when in fact they are uniformally distributed. Data shown for sample sizes of 10, 30, 50, and 75 participants. Percentage estimates are bootstrapped over 1000 iterations. The final plot shows an example of what the data being tested looks like. Labels in plots show mean estimated percentage of false negatives.</p>
 <pre class="r"><code>library(ggplot2)
 library(cowplot)
 

@@ -1,5 +1,5 @@
 ---
-title: "Shapiro-Wilk Test Simulation"
+title: "Shapiro-Wilk Test: False Negatives Simulation"
 author: "Ethan Weed"
 date: "3/24/2020"
 output:
