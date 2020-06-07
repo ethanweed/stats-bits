@@ -1,5 +1,5 @@
 ---
-title: "Shapiro-Wilkes Simulation"
+title: "Shapiro-Wilk Test Simulation"
 author: "Ethan Weed"
 date: "3/24/2020"
 output:
@@ -10,8 +10,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-Estimated distributions of percentages of p-values > 0.05 for Shapiro-Wilkes test with samples drawn from a uniform distribution. Represents the frequency with which we could expect the Shapiro-Wilkes test would lead to the conclusion that the data are normally distributed, when if fact they are uniformally distributed. Data shown of sample sizes of 10, 30, 50, and 75 participants. Percentage estimates are bootstrapped over 1000 iterations. Final plot shows an example of what the data being tested looks like. Labels in plots show mean estimated percentage.
-```{r echo = T,  message=FALSE, warning = F}
+The [Shapiro-Wilk test](https://en.wikipedia.org/wiki/Shapiro–Wilk_test) is used to evaluate whether a sample is likely to come from a normal distribution. The null hypothesis is that the sample is drawn from a normal distribution, thus a p < alpha indicates that the sample was drawn from a non-normal distribution. This simulation estimates distributions of percentages of p-values > 0.05 for the Shapiro-Wilk test when samples are drawn from a uniform distribution. This represents the frequency with which we could expect that the Shapiro-Wilk test would lead to the conclusion that the data are normally distributed, when in fact they are uniformally distributed. Data shown for sample sizes of 10, 30, 50, and 75 participants. Percentage estimates are bootstrapped over 1000 iterations. The final plot shows an example of what the data being tested looks like. Labels in plots show mean estimated percentage of false negatives.
+```{r echo = T,  results = 'hide', message=FALSE, warning = F}
 library(ggplot2)
 library(cowplot)
 
@@ -42,8 +42,8 @@ FalseNegative <- function(N){
   ggplot(df, aes(s)) +
     geom_density() +
     theme_cowplot() +
-    geom_vline(xintercept = mu) +
-    geom_label(aes(x = mu, label = paste0(mu, " %"), y = 0.18)) +
+    #geom_vline(xintercept = mu) +
+    geom_label(aes(x = 25, label = paste0(mu, " %"), y = 0.18)) +
     xlim(0,100) +
     ylim(0,.2) +
     labs(x = "percent",
@@ -72,7 +72,7 @@ p6 <- data_plot(50)
 
 p_grid <- plot_grid(p1, p2, p3, p4, p5, p6)
 
-pdf("/Users/ethan/Documents/GitHub/stat-simulations/shapiro_wilkes/Shapiro_Wilkes Simulation.pdf")
+pdf("/Users/ethan/Documents/GitHub/stat-simulations/shapiro_wilk/Shapiro_Wilk Simulation.pdf")
 plot(p_grid)
 dev.off()
 
