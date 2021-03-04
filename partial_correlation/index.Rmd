@@ -1,0 +1,68 @@
+---
+title: "Partial correlation"
+author: "Ethan Weed"
+date: "3/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(tidyverse, ppcor, pander)
+```
+
+According to <a href="https://en.wikipedia.org/wiki/Partial_correlation" target="_blank">Wikipedia</a>, partial correlation "measures the degree of association between two random variables, with the effect of a set of controlling random variables removed." To make things simple, we take three variables from the mtcars dataset.
+
+```{r}
+d <- mtcars
+
+df <- d[,c("mpg", "drat", "wt")]
+
+```
+
+To compute the partial correlation, we 
+
+1. model two linear regressions with the same predictor variable and different outcome variables
+2. correlate the resisduals from the two models
+
+```{r}
+mod1 <-  lm(drat ~ wt, data = d)
+m1s <- summary(mod1)
+m1res <- m1s$residuals
+
+mod2 <-  lm(mpg ~ wt, data = d)
+m2s <- summary(mod2)
+m2res <- m2s$residuals
+
+paste("Partial correlation of drat and mpg is ", cor(m1res,m2res))
+```
+
+To check, we can compare with the result using the ppcor package:
+
+```{r}
+pander(data.frame(pcor(df))[,1:3])
+```
+
+As expected, the partial correlation between drat and mpg is 0.1806, just as we found doing it the long way. 
+
+The same process works for more than three variables. Here, we model drat predicted by wt + qsec, and then mpg predicted by wt + qsec. We find the residuals of both regression models, and correlate them. The result is the same as that given by ppcor.
+
+```{r}
+
+df <- d[,c("mpg", "drat", "wt", "qsec")]
+
+mod1 <-  lm(drat ~ wt + qsec, data = d)
+m1s <- summary(mod1)
+m1res <- m1s$residuals
+
+mod2 <-  lm(mpg ~ wt + qsec, data = d)
+m2s <- summary(mod2)
+m2res <- m2s$residuals
+
+paste("Partial correlation of drat and mpg is ", cor(m1res,m2res))
+
+pander(data.frame(pcor(df))[,1:4])
+```
+
+
+
+Thus, a partial correlation matrix is a matrix of the residual correlations between variables, when the effects of the remaining variables have been removed.
