@@ -5,13 +5,17 @@ date: "4/13/2021"
 output: html_document
 ---
 
+# this .Rmd file can be found here: https://github.com/ethanweed/stats-bits/blob/master/PCA-demo.Rmd
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# load iris data
 ```{r}
 rm(list = ls())
 library(tidyverse)
+
 
 data(iris)
 df <- iris
@@ -41,6 +45,7 @@ m3 <- prcomp(df[,1:4], scale = TRUE)
 ### using FactoMineR
 ```{r}
 library(FactoMineR)
+
 # For variable coordinates
 #VarM1 <- get_pca_var(m1)
 #VarM2 <- get_pca_var(m2)
