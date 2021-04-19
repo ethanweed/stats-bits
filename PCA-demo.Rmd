@@ -1,0 +1,117 @@
+---
+title: "PCA-demo"
+author: "Ethan Weed"
+date: "4/13/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+
+data(iris)
+df <- iris
+```
+## Calculate PCA
+
+Here are three different functions for calculating PCA. ``princomp()`` uses the Spectral decomposition method, which looks at correlations/covariance between variables. ``factoextra::PCA`` and ``prcomp`` use the # factoextra PCA Singular value decomposition method: looks at correlations/covariance between individuals.
+
+### Method 1: princomp
+```{r}
+m1 <- princomp(df[,1:4])
+```
+
+### Method 2: FactoMineR
+```{r}
+library(FactoMineR)
+m2 <- PCA(df[,1:4], scale.unit = TRUE)
+```
+
+### Method 3: prcomp
+```{r}
+m3 <- prcomp(df[,1:4], scale = TRUE)
+```
+
+## Extract PCA coordinates
+
+### using FactoMineR
+```{r}
+library(FactoMineR)
+# For variable coordinates
+#VarM1 <- get_pca_var(m1)
+#VarM2 <- get_pca_var(m2)
+#VarM3 <- get_pca_var(m3)
+
+# For observation coordinates
+VarM1 <- get_pca_ind(m1)
+VarM2 <- get_pca_ind(m2)
+VarM3 <- get_pca_ind(m3)
+
+VarM1 <- VarM1$coord
+VarM2 <- VarM2$coord
+VarM3 <- VarM3$coord
+
+colnames(VarM1) <- c("PC1", "PC2", "PC3", "PC4")
+colnames(VarM2) <- c("PC1", "PC2", "PC3", "PC4")
+colnames(VarM3) <- c("PC1", "PC2", "PC3", "PC4")
+```
+
+### extracted directly from pca objects
+```{r}
+# Method 1: princomp
+m1_coordinates <- data.frame(m1$scores)
+
+# Method 2: factoextra
+m2_coordinates <- data.frame(m2$ind$coord)
+
+# Method 3: prcomp
+m3_coordinates <- data.frame(m3$x)
+```
+
+
+# Compare the first PC as calculated by methods 1,2 and 3: do different algorithms give different results?
+```{r}
+PC1s <-data.frame(m1_coordinates$Comp.1, 
+                  m2_coordinates$Dim.1, 
+                  m3_coordinates$PC1)
+
+colnames(PC1s) <- c("princomp", "factoextra", "prcomp")
+```
+
+
+# Nice visualizations you can do with FactoMineR
+
+## Scree plot: % variance explained by PC's
+```{r}
+fviz_eig(m3)
+```
+
+
+## Plot individuals on PC's 1 and 2 and color by category
+```{r}
+# Add the categorical ("qualitative") data back in from column 5 (Species)
+pc <- PCA(df, quali.sup = 5)
+
+# plot individuals on PC's 1 and 2 and color by category
+fviz_pca_ind(pc,
+             col.ind = iris$Species)
+```
+
+## Define overlapping or non-overlapping zones for categories
+```{r}
+fviz_pca_ind(pc,
+             col.ind = iris$Species,
+             addEllipses = TRUE)
+```
+
+
+## Show the contribution of the predictor variables to PC's 1 and 2
+```{r}
+fviz_pca_var(pc,
+             col.var = "contrib")
+```
+
