@@ -42,9 +42,9 @@ m3 <- prcomp(df[,1:4], scale = TRUE)
 
 ## Extract PCA coordinates
 
-### using FactoMineR
+### using factoextra
 ```{r}
-library(FactoMineR)
+library(factoextra)
 
 # For variable coordinates
 #VarM1 <- get_pca_var(m1)
@@ -59,6 +59,10 @@ VarM3 <- get_pca_ind(m3)
 VarM1 <- VarM1$coord
 VarM2 <- VarM2$coord
 VarM3 <- VarM3$coord
+
+VarM1 <- as.data.frame(VarM1)
+VarM2 <- as.data.frame(VarM2)
+VarM3 <- as.data.frame(VarM3)
 
 colnames(VarM1) <- c("PC1", "PC2", "PC3", "PC4")
 colnames(VarM2) <- c("PC1", "PC2", "PC3", "PC4")
@@ -75,13 +79,25 @@ m2_coordinates <- data.frame(m2$ind$coord)
 
 # Method 3: prcomp
 m3_coordinates <- data.frame(m3$x)
+
+colnames(m1_coordinates) <- c("PC1", "PC2", "PC3", "PC4")
+colnames(m2_coordinates) <- c("PC1", "PC2", "PC3", "PC4")
+colnames(m3_coordinates) <- c("PC1", "PC2", "PC3", "PC4")
+```
+
+
+#Export coordinates
+```{r}
+pathout <- "/Users/ethan/Desktop/"
+setwd(pathout)
+write.csv(m1_coordinates, "my_pca.csv", row.names = FALSE)
 ```
 
 
 # Compare the first PC as calculated by methods 1,2 and 3: do different algorithms give different results?
 ```{r}
-PC1s <-data.frame(m1_coordinates$Comp.1, 
-                  m2_coordinates$Dim.1, 
+PC1s <-data.frame(m1_coordinates$PC1, 
+                  m2_coordinates$PC1, 
                   m3_coordinates$PC1)
 
 colnames(PC1s) <- c("princomp", "factoextra", "prcomp")
