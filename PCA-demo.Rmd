@@ -88,7 +88,7 @@ colnames(m3_coordinates) <- c("PC1", "PC2", "PC3", "PC4")
 
 #Export coordinates
 ```{r}
-pathout <- "/Users/ethan/Desktop/"
+pathout <- "/path/to/folder/"
 setwd(pathout)
 write.csv(m1_coordinates, "my_pca.csv", row.names = FALSE)
 ```
@@ -102,6 +102,14 @@ PC1s <-data.frame(m1_coordinates$PC1,
 
 colnames(PC1s) <- c("princomp", "factoextra", "prcomp")
 ```
+
+# Inspect eigenvalues for the components
+```{r}
+library(factoextra)
+res <- get_eigenvalue(m3)
+
+```
+
 
 
 # Nice visualizations you can do with FactoMineR
