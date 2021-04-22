@@ -32,7 +32,7 @@ m1 <- princomp(df[,1:4])
 ### Method 2: FactoMineR
 ```{r}
 library(FactoMineR)
-m2 <- PCA(df[,1:4], scale.unit = TRUE)
+m2 <- PCA(df[,1:4], scale.unit = TRUE,)
 ```
 
 ### Method 3: prcomp
@@ -88,9 +88,9 @@ colnames(m3_coordinates) <- c("PC1", "PC2", "PC3", "PC4")
 
 #Export coordinates
 ```{r}
-pathout <- "/path/to/folder/"
-setwd(pathout)
-write.csv(m1_coordinates, "my_pca.csv", row.names = FALSE)
+#pathout <- "/path/to/folder/"
+#setwd(pathout)
+#write.csv(m1_coordinates, "my_pca.csv", row.names = FALSE)
 ```
 
 
