@@ -5,7 +5,7 @@ date: "4/13/2021"
 output: html_document
 ---
 
-# this .Rmd file can be found here: https://github.com/ethanweed/stats-bits/blob/master/PCA-demo.Rmd
+# Quick notes on R functions for calculating PCA and extracting components
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
