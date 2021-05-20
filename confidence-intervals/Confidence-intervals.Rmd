@@ -1,0 +1,40 @@
+---
+title: "Confidence intervals"
+author: "Ethan Weed"
+date: "5/20/2021"
+output:
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Effect of sample size on confidence intervals
+```{r echo = T, results = 'hide', message=FALSE, warning = F}
+pacman::p_load(ggplot2, cowplot)
+set.seed(42)
+
+df <- mtcars
+
+adjust_sample_size <- function(s){
+  d <- df[sample(nrow(df), s, replace = TRUE), ]
+  ggplot(d, aes(x=wt, y=mpg)) +
+    geom_point() +
+    geom_smooth(method="lm") +
+    labs(title = paste("N =", s)) +
+    theme_classic()
+}
+
+p1 <- adjust_sample_size(1)
+p2 <- adjust_sample_size(2)
+p3 <- adjust_sample_size(3)
+p5 <- adjust_sample_size(5)
+p10 <- adjust_sample_size(10)
+p100 <- adjust_sample_size(100)
+p500 <- adjust_sample_size(500)
+
+plot_grid(p1, p2, p3, p5, p10, p100, p500)
+```
+
